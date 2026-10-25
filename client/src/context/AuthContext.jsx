@@ -1,39 +1,54 @@
 import { createContext, useContext, useMemo, useState } from 'react';
 import { loginUser, registerUser } from '../services/api';
 
+const SESSION_KEY = 'ipms_session';
 const AuthContext = createContext(null);
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem('ipms_session');
+const readStoredSession = () => {
+  try {
+    const stored = localStorage.getItem(SESSION_KEY);
     return stored ? JSON.parse(stored) : null;
-  });
+  } catch (error) {
+    return null;
+  }
+};
+
+export const AuthProvider = ({ children }) => {
+  const [session, setSession] = useState(() => readStoredSession());
 
   const login = async (credentials) => {
-    const loggedUser = await loginUser(credentials);
-    localStorage.setItem('ipms_session', JSON.stringify(loggedUser));
-    setUser(loggedUser);
-    return loggedUser;
+    const response = await loginUser(credentials);
+    const nextSession = {
+      token: response.token,
+      user: response.user,
+    };
+    localStorage.setItem(SESSION_KEY, JSON.stringify(nextSession));
+    setSession(nextSession);
+    return response.user;
   };
 
   const register = async (data) => {
-    const createdUser = await registerUser(data);
-    return createdUser;
+    const response = await registerUser(data);
+    return response.user || response;
   };
 
   const logout = () => {
-    localStorage.removeItem('ipms_session');
-    setUser(null);
+    localStorage.removeItem(SESSION_KEY);
+    setSession(null);
   };
+
+  const user = session?.user ?? null;
+  const token = session?.token ?? null;
 
   const value = useMemo(
     () => ({
       user,
+      token,
       login,
       register,
       logout,
     }),
-    [user],
+    [user, token],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

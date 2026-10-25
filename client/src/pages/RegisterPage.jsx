@@ -7,7 +7,6 @@ const initialForm = {
   name: '',
   email: '',
   password: '',
-  role: 'salesman',
 };
 
 export default function RegisterPage() {
@@ -65,7 +64,7 @@ export default function RegisterPage() {
               <div className="text-center mb-4">
                 <div className="brand-badge large mx-auto mb-3">IP</div>
                 <h2 className="mb-1">Create account</h2>
-                <p className="text-muted">Register as admin, manager, or salesman</p>
+                <p className="text-muted">Create your account to get started</p>
               </div>
 
               {submitError && <Alert variant="danger">{submitError}</Alert>}
@@ -105,18 +104,6 @@ export default function RegisterPage() {
                     placeholder="At least 6 characters"
                   />
                   <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
-                </Form.Group>
-
-                <Form.Group className="mb-3">
-                  <Form.Label>Role</Form.Label>
-                  <Form.Select
-                    value={form.role}
-                    onChange={(event) => setForm({ ...form, role: event.target.value })}
-                  >
-                    <option value="admin">Admin</option>
-                    <option value="manager">Manager</option>
-                    <option value="salesman">Salesman</option>
-                  </Form.Select>
                 </Form.Group>
 
                 <Button type="submit" className="w-100" variant="primary" disabled={loading}>
