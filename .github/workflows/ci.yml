@@ -1,0 +1,25 @@
+
+name: IPMS CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docker-build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build frontend image
+        run: docker build -t ipms-frontend:ci ./client
+
+      - name: Build backend image
+        run: docker build -t ipms-backend:ci ./server
