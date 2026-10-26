@@ -1,0 +1,27 @@
+
+services:
+  backend:
+    image: ipms-backend:1.0
+    container_name: ipms-backend-compose
+    restart: unless-stopped
+    env_file:
+      - ./server/.env
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/stock_system
+    ports:
+      - "5000:5000"
+    networks:
+      - ipms-network
+
+  frontend:
+    image: ipms-frontend:1.0
+    container_name: ipms-frontend-compose
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    networks:
+      - ipms-network
+
+networks:
+  ipms-network:
+    external: true

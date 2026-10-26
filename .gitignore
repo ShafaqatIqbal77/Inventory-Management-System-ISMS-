@@ -7,3 +7,10 @@ client/dist
 client/.vite
 .DS_Store
 npm-debug.log*
+# Database backups
+backups/
+*.archive
+
+# Environment secrets
+.env
+**/.env
