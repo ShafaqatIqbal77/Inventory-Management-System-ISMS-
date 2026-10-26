@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Inventory Management System (IPMS)
 
 A web-based stock, inventory, and sales management system built with React, Vite, React Router, React Bootstrap, React Icons, and Recharts.
@@ -53,3 +54,6 @@ Then open the local URL shown by Vite in the browser.
 ## Notes
 
 This frontend uses mock data for the current phase and stores records in localStorage. The API layer is centralized in `src/services/api.js` so it can later be replaced with real HTTP calls to a backend API.
+=======
+# Inventory-Management-System-ISMS-
+>>>>>>> origin/main
